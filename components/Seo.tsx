@@ -21,7 +21,7 @@ export const Seo = () => {
       <meta property="og:description" content={pageDesc} key="ogdesc" />
       <meta property="og:type" content="website" />
       <meta property="og:url" content="https://blognlp.com/" key="ogurl" />
-      <meta property="og:image" content="https://blognlp.com/blog.png" />
+      <meta property="og:image" content="https://blognlp.com/main.png" />
 
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={pageTitle} />
@@ -32,7 +32,7 @@ export const Seo = () => {
         name="twitter:creator"
         content={twitterHandle}
       />
-      <meta name="twitter:image" content="https://blognlp.com/blog.png" />
+      <meta name="twitter:image" content="https://blognlp.com/main.png" />
       <link rel="canonical" key="canonical" href={canonicalUrl} />
     </Head>
   );
