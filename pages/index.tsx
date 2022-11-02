@@ -310,7 +310,7 @@ export default function Home() {
         </div>
       </div>
 
-      <footer className="flex justify-center space-y-2 flex-col items-center mb-10 text-xs">
+      <footer className="flex w-[15rem] mx-auto text-center justify-center space-y-2 flex-col items-center mb-10 text-xs">
         <span>
           Designed & built by
           <a
