@@ -56,6 +56,7 @@ export default function Home() {
       top_p: 1,
       frequency_penalty: 0.5,
       presence_penalty: 0,
+      user: "user123456",
     });
     setLoading({
       ...loading,
@@ -78,6 +79,7 @@ export default function Home() {
       top_p: 1,
       frequency_penalty: 0.5,
       presence_penalty: 0,
+      user: "user123456",
     });
 
     setLoading({
@@ -101,6 +103,7 @@ export default function Home() {
       top_p: 1,
       frequency_penalty: 0.5,
       presence_penalty: 0,
+      user: "user123456",
     });
 
     setLoading({
@@ -124,6 +127,7 @@ export default function Home() {
       top_p: 1,
       frequency_penalty: 0.5,
       presence_penalty: 0,
+      user: "user123456",
     });
 
     setLoading({
