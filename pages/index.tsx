@@ -6,8 +6,7 @@ import {
   CreateCompletionResponseChoicesInner,
   OpenAIApi as OpenAIApiType,
 } from "openai";
-
-const { Configuration, OpenAIApi } = require("openai");
+import  { Configuration, OpenAIApi } from "openai"
 
 export default function Home() {
   const [idea, setIdea] = useState({
