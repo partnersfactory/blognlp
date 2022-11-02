@@ -6,7 +6,8 @@ import {
   CreateCompletionResponseChoicesInner,
   OpenAIApi as OpenAIApiType,
 } from "openai";
-import  { Configuration, OpenAIApi } from "openai"
+import { Configuration, OpenAIApi } from "openai";
+import axios from "axios";
 
 export default function Home() {
   const [idea, setIdea] = useState({
@@ -47,22 +48,43 @@ export default function Home() {
       ...loading,
       topic: true,
     });
-    const response = await openai.createCompletion({
-      model: "text-davinci-002",
-      prompt: `Generate blog topics on ${idea.topic}.`,
-      temperature: 0.8,
-      max_tokens: 200,
-      top_p: 1,
-      frequency_penalty: 0.5,
-      presence_penalty: 0,
-      user: "user123456",
+    const response = await fetch("/api/topics", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ text: idea.topic }),
     });
+    const data = await response.json();
     setLoading({
       ...loading,
       topic: false,
     });
-    setTopics(response.data.choices);
+    setTopics(data.result.choices as CreateCompletionResponseChoicesInner[]);
   };
+
+  // const generateBlogTopics = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   setLoading({
+  //     ...loading,
+  //     topic: true,
+  //   });
+  //   const response = await openai.createCompletion({
+  //     model: "text-davinci-002",
+  //     prompt: `Generate blog topics on ${idea.topic}.`,
+  //     temperature: 0.8,
+  //     max_tokens: 200,
+  //     top_p: 1,
+  //     frequency_penalty: 0.5,
+  //     presence_penalty: 0,
+  //     user: "user123456",
+  //   });
+  //   setLoading({
+  //     ...loading,
+  //     topic: false,
+  //   });
+  //   setTopics(response.data.choices);
+  // };
 
   const generateBlogHeadlines = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -70,22 +92,20 @@ export default function Home() {
       ...loading,
       headline: true,
     });
-    const response = await openai.createCompletion({
-      model: "text-davinci-002",
-      prompt: `Generate blog headlines on ${idea.headline}.`,
-      temperature: 0.8,
-      max_tokens: 200,
-      top_p: 1,
-      frequency_penalty: 0.5,
-      presence_penalty: 0,
-      user: "user123456",
+    const response = await fetch("/api/headline", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ text: idea.headline }),
     });
+    const data = await response.json();
 
     setLoading({
       ...loading,
       headline: false,
     });
-    setHeadlines(response.data.choices);
+    setHeadlines(data.result.choices as CreateCompletionResponseChoicesInner[]);
   };
 
   const generateBlogOutline = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -94,22 +114,20 @@ export default function Home() {
       ...loading,
       outline: true,
     });
-    const response = await openai.createCompletion({
-      model: "text-davinci-002",
-      prompt: `Generate a blog outline with high level blog sections on ${idea.outline}.`,
-      temperature: 0.8,
-      max_tokens: 200,
-      top_p: 1,
-      frequency_penalty: 0.5,
-      presence_penalty: 0,
-      user: "user123456",
+    const response = await fetch("/api/outline", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ text: idea.outline }),
     });
+    const data = await response.json();
 
     setLoading({
       ...loading,
       outline: false,
     });
-    setOutline(response.data.choices);
+    setOutline(data.result.choices as CreateCompletionResponseChoicesInner[]);
   };
 
   const generateBlogArticle = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -118,22 +136,21 @@ export default function Home() {
       ...loading,
       article: true,
     });
-    const response = await openai.createCompletion({
-      model: "text-davinci-002",
-      prompt: `Generate a detailed professional, witty blog article on ${idea.article}.`,
-      temperature: 0.8,
-      max_tokens: 2500,
-      top_p: 1,
-      frequency_penalty: 0.5,
-      presence_penalty: 0,
-      user: "user123456",
+
+    const response = await fetch("/api/article", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ text: idea.article }),
     });
+    const data = await response.json();
 
     setLoading({
       ...loading,
       article: false,
     });
-    setArticle(response.data.choices);
+    setArticle(data.result.choices as CreateCompletionResponseChoicesInner[]);
   };
 
   const blogTopics: string[] | undefined = useMemo(() => {
