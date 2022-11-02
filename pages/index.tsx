@@ -179,7 +179,7 @@ export default function Home() {
                   {loading.topic && <Loading />}
                   {!loading.topic && (
                     <button
-                      className="bg-gradient-to-r cursor-pointer from-indigo-500 via-purple-500 to-pink-500 text-white p-2 rounded-md w-[10rem] hover:scale-105 transition duration-300 ease-in-out disabled:opacity-25 disabled:scale-105"
+                      className="bg-gradient-to-r cursor-pointer from-indigo-500 via-purple-500 to-pink-500 text-white p-2 rounded-md w-[10rem] hover:scale-105 transition duration-300 ease-in-out disabled:opacity-25 disabled:scale-95"
                       disabled={!idea.topic}
                     >
                       Submit
@@ -216,7 +216,7 @@ export default function Home() {
                   {loading.outline && <Loading />}
                   {!loading.outline && (
                     <button
-                      className="bg-gradient-to-r cursor-pointer from-indigo-500 via-purple-500 to-pink-500 text-white p-2 rounded-md w-[10rem] hover:scale-105 transition duration-300 ease-in-out disabled:opacity-25 disabled:scale-105"
+                      className="bg-gradient-to-r cursor-pointer from-indigo-500 via-purple-500 to-pink-500 text-white p-2 rounded-md w-[10rem] hover:scale-105 transition duration-300 ease-in-out disabled:opacity-25 disabled:scale-95"
                       disabled={!idea.outline}
                     >
                       Submit
@@ -253,7 +253,7 @@ export default function Home() {
                   {loading.headline && <Loading />}
                   {!loading.headline && (
                     <button
-                      className="bg-gradient-to-r cursor-pointer from-indigo-500 via-purple-500 to-pink-500 text-white p-2 rounded-md w-[10rem] hover:scale-105 transition duration-300 ease-in-out disabled:opacity-25 disabled:scale-105"
+                      className="bg-gradient-to-r cursor-pointer from-indigo-500 via-purple-500 to-pink-500 text-white p-2 rounded-md w-[10rem] hover:scale-105 transition duration-300 ease-in-out disabled:opacity-25 disabled:scale-95"
                       disabled={!idea.headline}
                     >
                       Submit
@@ -290,7 +290,7 @@ export default function Home() {
                   {loading.article && <Loading />}
                   {!loading.article && (
                     <button
-                      className="bg-gradient-to-r cursor-pointer from-indigo-500 via-purple-500 to-pink-500 text-white p-2 rounded-md w-[10rem] hover:scale-105 transition duration-300 ease-in-out disabled:opacity-25 disabled:scale-105"
+                      className="bg-gradient-to-r cursor-pointer from-indigo-500 via-purple-500 to-pink-500 text-white p-2 rounded-md w-[10rem] hover:scale-105 transition duration-300 ease-in-out disabled:opacity-25 disabled:scale-95"
                       disabled={!idea.article}
                     >
                       Submit
