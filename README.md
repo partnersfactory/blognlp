@@ -1,12 +1,12 @@
-# Next.js + Tailwind CSS Example
+# BlogNLP 
 
-This example shows how to use [Tailwind CSS](https://tailwindcss.com/) [(v3.0)](https://tailwindcss.com/blog/tailwindcss-v3) with Next.js. It follows the steps outlined in the official [Tailwind docs](https://tailwindcss.com/docs/guides/nextjs).
+BlogNLP is a free AI blog writing tool that helps you break your writer's block to create original content in a fraction of a time. Powered by Open AI's GPT-3.
 
-## Deploy your own
+![Screen Shot 2022-11-02 at 3 28 18 PM](https://user-images.githubusercontent.com/52144063/199585829-24179d6c-914a-4e9f-b4f3-7ebabd8df159.png)
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example) or preview live with [StackBlitz](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/with-tailwindcss)
+## Demo Video
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-tailwindcss&project-name=with-tailwindcss&repository-name=with-tailwindcss)
+https://user-images.githubusercontent.com/52144063/199585857-b221f321-af65-4fa5-9dc0-1a4fcdb35fd7.mov
 
 ## How to use
 
