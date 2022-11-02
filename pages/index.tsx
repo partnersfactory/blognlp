@@ -1,13 +1,7 @@
 import React, { useState, useMemo } from "react";
 import { Button, NextUIProvider, Loading, Input } from "@nextui-org/react";
 import { Seo } from "../components/Seo";
-import {
-  Configuration as OpenAIConfiguration,
-  CreateCompletionResponseChoicesInner,
-  OpenAIApi as OpenAIApiType,
-} from "openai";
-import { Configuration, OpenAIApi } from "openai";
-import axios from "axios";
+import { CreateCompletionResponseChoicesInner } from "openai";
 
 export default function Home() {
   const [idea, setIdea] = useState({
@@ -36,12 +30,6 @@ export default function Home() {
     CreateCompletionResponseChoicesInner[] | null
   >(null);
 
-  const configuration: OpenAIConfiguration = new Configuration({
-    apiKey: `${process.env.NEXT_PUBLIC_OPEN_AI}`,
-  });
-
-  const openai: OpenAIApiType = new OpenAIApi(configuration);
-
   const generateBlogTopics = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading({
@@ -62,29 +50,6 @@ export default function Home() {
     });
     setTopics(data.result.choices as CreateCompletionResponseChoicesInner[]);
   };
-
-  // const generateBlogTopics = async (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   setLoading({
-  //     ...loading,
-  //     topic: true,
-  //   });
-  //   const response = await openai.createCompletion({
-  //     model: "text-davinci-002",
-  //     prompt: `Generate blog topics on ${idea.topic}.`,
-  //     temperature: 0.8,
-  //     max_tokens: 200,
-  //     top_p: 1,
-  //     frequency_penalty: 0.5,
-  //     presence_penalty: 0,
-  //     user: "user123456",
-  //   });
-  //   setLoading({
-  //     ...loading,
-  //     topic: false,
-  //   });
-  //   setTopics(response.data.choices);
-  // };
 
   const generateBlogHeadlines = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
