@@ -98,7 +98,7 @@ export default function Home() {
     });
     const response = await openAI.createCompletion({
       model: "text-davinci-002",
-      prompt: `Generate the concluding paragraph for a blog titled ${idea.outro}.`,
+      prompt: `Generate the final concluding paragraph for a blog titled ${idea.outro}.`,
       temperature: 0.8,
       max_tokens: 350,
       top_p: 1,
