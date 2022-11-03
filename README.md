@@ -6,7 +6,10 @@ BlogNLP is a free AI blog writing tool that helps you break your writer's block 
 
 ## Demo Video
 
-https://user-images.githubusercontent.com/52144063/199585857-b221f321-af65-4fa5-9dc0-1a4fcdb35fd7.mov
+
+https://user-images.githubusercontent.com/52144063/199797959-ce61b81b-8af2-463f-b896-7dba63b2ae1d.mov
+
+
 
 ## How to use
 
