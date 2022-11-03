@@ -26,7 +26,7 @@ export const SectionForm = ({
 }) => {
   return (
     <div className="flex flex-col space-y-4">
-      <h2 className="mb-2 text-xl">{title}</h2>
+      <h2 className="mb-2 text-xl font-semibold">{title}</h2>
       <form className="w-full" onSubmit={onSubmit}>
         <div className="flex space-x-5 items-center">
           {type === TextType.INPUT && (

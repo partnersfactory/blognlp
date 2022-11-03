@@ -261,7 +261,7 @@ export default function Home() {
         <div className="flex flex-col justify-center items-center md:gap-4">
           <div>
             <div className="flex justify-between items-center">
-              <h1 className="m-0 text-6xl font-semibold mb-4">
+              <h1 className="m-0 text-6xl font-bold mb-4">
                 BlogNLP{" "}
                 <span role="img" aria-label="writing-hand">
                   ✍️
