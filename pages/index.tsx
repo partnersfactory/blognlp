@@ -170,12 +170,12 @@ export default function Home() {
     });
     const response = await openAI.createCompletion({
       model: "text-davinci-002",
-      prompt: `Generate a detailed, professional, engaging, witty blog article on ${idea.article}.`,
+      prompt: `Generate an engaging detailed blog post with an intro, body, and conclusion on ${idea.article}.`,
       temperature: 0.9,
       max_tokens: 4000,
       top_p: 1,
       frequency_penalty: 0.8,
-      presence_penalty: -2,
+      presence_penalty: 0,
       user: "user123456",
     });
 
