@@ -12,6 +12,7 @@ export default function Home() {
     outro: "",
     headline: "",
     outline: "",
+    tone: "",
     article: "",
   });
   const [loading, setLoading] = useState({
@@ -20,6 +21,7 @@ export default function Home() {
     outro: false,
     headline: false,
     outline: false,
+    tone: false,
     article: false,
   });
 
@@ -36,6 +38,9 @@ export default function Home() {
     CreateCompletionResponseChoicesInner[] | null
   >(null);
   const [outline, setOutline] = useState<
+    CreateCompletionResponseChoicesInner[] | null
+  >(null);
+  const [tone, setTone] = useState<
     CreateCompletionResponseChoicesInner[] | null
   >(null);
   const [article, setArticle] = useState<
@@ -162,6 +167,30 @@ export default function Home() {
     setOutline(response.data.choices);
   };
 
+  const generateBlogTone = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading({
+      ...loading,
+      tone: true,
+    });
+    const response = await openAI.createCompletion({
+      model: "text-davinci-002",
+      prompt: `Detect the tone of voice based on the provided written content: ${idea.tone}.`,
+      temperature: 0.8,
+      max_tokens: 250,
+      top_p: 1,
+      frequency_penalty: 0.8,
+      presence_penalty: 0,
+      user: "user123456",
+    });
+
+    setLoading({
+      ...loading,
+      tone: false,
+    });
+    setTone(response.data.choices);
+  };
+
   const generateBlogArticle = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading({
@@ -218,6 +247,11 @@ export default function Home() {
       .filter((headline) => headline.length > 0);
   }, [headlines]);
 
+  const blogTone: string[] | undefined = useMemo(() => {
+    if (!tone) return [];
+    return tone[0].text?.split("\n").filter((topic) => topic.length > 0);
+  }, [tone]);
+
   return (
     <div>
       <Seo />
@@ -240,6 +274,7 @@ export default function Home() {
           <main className="flex flex-col overflow-y-scroll w-full py-3 md:w-[650px] max-h-[650px]">
             <SectionForm
               title="Generate blog topics ideas 💡"
+              placeholder="Enter a blog topic..."
               value={idea.topic}
               onSubmit={(e) => generateBlogTopics(e)}
               onChange={(e) =>
@@ -254,6 +289,7 @@ export default function Home() {
             <div className="border my-5"></div>
             <SectionForm
               title="Generate an outline to better organize your blog 📝"
+              placeholder="Enter a blog title or topic..."
               value={idea.outline}
               onSubmit={(e) => generateBlogOutline(e)}
               onChange={(e) =>
@@ -268,6 +304,7 @@ export default function Home() {
             <div className="border my-5"></div>
             <SectionForm
               title="Generate a blog post intro paragraph ⚡️"
+              placeholder="Enter a blog title..."
               value={idea.intro}
               onSubmit={(e) => generateBlogIntro(e)}
               onChange={(e) =>
@@ -282,6 +319,7 @@ export default function Home() {
             <div className="border my-5"></div>
             <SectionForm
               title="Generate a blog post outro paragraph 🌗"
+              placeholder="Enter a blog title..."
               value={idea.outro}
               onSubmit={(e) => generateBlogOutro(e)}
               onChange={(e) =>
@@ -295,7 +333,24 @@ export default function Home() {
             />
             <div className="border my-5"></div>
             <SectionForm
+              title="Detect tone of voice 🎶"
+              type="tone"
+              placeholder="Enter written content..."
+              value={idea.tone}
+              onSubmit={(e) => generateBlogTone(e)}
+              onChange={(e) =>
+                setIdea({
+                  ...idea,
+                  tone: e.target.value,
+                })
+              }
+              isLoading={loading.tone}
+              blogText={blogTone}
+            />
+            <div className="border my-5"></div>
+            <SectionForm
               title="Generate an attention-grabbing headline for your blog ⭐️"
+              placeholder="Enter a blog topic..."
               value={idea.headline}
               onSubmit={(e) => generateBlogHeadlines(e)}
               onChange={(e) =>
@@ -310,6 +365,7 @@ export default function Home() {
             <div className="border my-5"></div>
             <SectionForm
               title="Generate a professionally written blog for inspiration ✨"
+              placeholder="Enter a blog topic..."
               value={idea.article}
               onSubmit={(e) => generateBlogArticle(e)}
               onChange={(e) =>

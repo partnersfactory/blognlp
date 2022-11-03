@@ -2,6 +2,8 @@ import React from "react";
 
 export const SectionForm = ({
   title,
+  type,
+  placeholder,
   onSubmit,
   value,
   onChange,
@@ -9,9 +11,11 @@ export const SectionForm = ({
   blogText,
 }: {
   title: string;
+  type?: string;
+  placeholder: string;
   onSubmit: React.FormEventHandler<HTMLFormElement>;
   value: string;
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  onChange: React.ChangeEventHandler<any>;
   isLoading: boolean;
   blogText?: string[];
 }) => {
@@ -20,12 +24,23 @@ export const SectionForm = ({
       <h2 className="px-4 mb-2 text-xl">{title}</h2>
       <form className="px-4" onSubmit={onSubmit}>
         <div className="flex space-x-5 items-center">
-          <input
-            className="border outline-none font-light rounded-md p-2 w-[340px] focus:border-blue-400 transition duration-300 ease-in-out"
-            placeholder="Enter a blog title..."
-            value={value}
-            onChange={onChange}
-          />
+          {type !== "tone" && (
+            <input
+              className="border outline-none font-light rounded-md p-2 w-[340px] focus:border-blue-400 transition duration-300 ease-in-out"
+              placeholder={placeholder}
+              value={value}
+              onChange={onChange}
+            />
+          )}
+          {type === "tone" && (
+            <textarea
+              className="border outline-none font-light rounded-md p-2 w-[340px] focus:border-blue-400 transition duration-300 ease-in-out"
+              placeholder={placeholder}
+              rows={10}
+              value={value}
+              onChange={onChange}
+            />
+          )}
           {isLoading && <Loading />}
           {!isLoading && (
             <button
