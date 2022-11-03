@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from "react";
 import { Seo } from "../components/Seo";
+import { Sun, Moon } from "react-feather";
 import { CreateCompletionResponseChoicesInner } from "openai";
 import { useOpenAI } from "../hooks/useOpenAI";
 import { SectionForm, TextType } from "../components/SectionForm";
@@ -256,15 +257,18 @@ export default function Home() {
     <div>
       <Seo />
 
-      <div className="min-h-screen w-full py-10 px-4 md:px-0 text-black md:flex md:items-center md:justify-center">
+      <div className="min-h-screen w-full py-10 px-4 md:px-0 bg-white text-black md:flex md:items-center md:justify-center">
         <div className="flex flex-col justify-center items-center md:gap-4">
           <div>
-            <h1 className="m-0 text-6xl font-medium mb-4">
-              BlogNLP{" "}
-              <span role="img" aria-label="writing-hand">
-                ✍️
-              </span>
-            </h1>
+            <div className="flex justify-between items-center">
+              <h1 className="m-0 text-6xl font-semibold mb-4">
+                BlogNLP{" "}
+                <span role="img" aria-label="writing-hand">
+                  ✍️
+                </span>
+              </h1>
+            </div>
+
             <p className="w-full text-sm md:w-[650px] mb-5">
               BlogNLP is a free AI blog writing tool that helps you break your
               writer&apos;s block to create original content in a fraction of a
