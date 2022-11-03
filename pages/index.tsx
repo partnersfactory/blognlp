@@ -7,18 +7,28 @@ export default function Home() {
   const openAI = useOpenAI();
   const [idea, setIdea] = useState({
     topic: "",
+    intro: "",
+    outro: "",
     headline: "",
     outline: "",
     article: "",
   });
   const [loading, setLoading] = useState({
     topic: false,
+    intro: false,
+    outro: false,
     headline: false,
     outline: false,
     article: false,
   });
 
   const [topics, setTopics] = useState<
+    CreateCompletionResponseChoicesInner[] | null
+  >(null);
+  const [intro, setIntro] = useState<
+    CreateCompletionResponseChoicesInner[] | null
+  >(null);
+  const [outro, setOutro] = useState<
     CreateCompletionResponseChoicesInner[] | null
   >(null);
   const [headlines, setHeadlines] = useState<
@@ -39,7 +49,7 @@ export default function Home() {
     });
     const response = await openAI.createCompletion({
       model: "text-davinci-002",
-      prompt: `Generate blog topics on ${idea.topic}.`,
+      prompt: `Generate new blog post topics that will engage readers regarding ${idea.topic}.`,
       temperature: 0.8,
       max_tokens: 200,
       top_p: 1,
@@ -53,6 +63,54 @@ export default function Home() {
       topic: false,
     });
     setTopics(response.data.choices);
+  };
+
+  const generateBlogIntro = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading({
+      ...loading,
+      intro: true,
+    });
+    const response = await openAI.createCompletion({
+      model: "text-davinci-002",
+      prompt: `Generate the opening paragraph for a blog titled ${idea.intro}.`,
+      temperature: 0.8,
+      max_tokens: 300,
+      top_p: 1,
+      frequency_penalty: 0.8,
+      presence_penalty: 0,
+      user: "user123456",
+    });
+
+    setLoading({
+      ...loading,
+      intro: false,
+    });
+    setIntro(response.data.choices);
+  };
+
+  const generateBlogOutro = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading({
+      ...loading,
+      outro: true,
+    });
+    const response = await openAI.createCompletion({
+      model: "text-davinci-002",
+      prompt: `Generate an engaging conclusion paragraph for a blog titled ${idea.outro}.`,
+      temperature: 0.8,
+      max_tokens: 300,
+      top_p: 1,
+      frequency_penalty: 0.8,
+      presence_penalty: 0,
+      user: "user123456",
+    });
+
+    setLoading({
+      ...loading,
+      outro: false,
+    });
+    setOutro(response.data.choices);
   };
 
   const generateBlogHeadlines = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -87,7 +145,7 @@ export default function Home() {
     });
     const response = await openAI.createCompletion({
       model: "text-davinci-002",
-      prompt: `Generate a blog outline with high level blog sections on ${idea.outline}.`,
+      prompt: `Create lists and outlines for articles regarding ${idea.outline}.`,
       temperature: 0.8,
       max_tokens: 250,
       top_p: 1,
@@ -137,6 +195,16 @@ export default function Home() {
     return outline[0].text?.split("\n").filter((outline) => outline.length > 0);
   }, [outline]);
 
+  const blogIntro: string[] | undefined = useMemo(() => {
+    if (!intro) return [];
+    return intro[0].text?.split("\n").filter((intro) => intro.length > 0);
+  }, [intro]);
+
+  const blogOutro: string[] | undefined = useMemo(() => {
+    if (!outro) return [];
+    return outro[0].text?.split("\n").filter((outro) => outro.length > 0);
+  }, [outro]);
+
   const blogArticle: string[] | undefined = useMemo(() => {
     if (!article) return [];
     return article[0].text?.split("\n").filter((article) => article.length > 0);
@@ -171,13 +239,13 @@ export default function Home() {
           <main className="flex flex-col overflow-y-scroll w-full md:w-[650px] max-h-[700px]">
             <div className="flex flex-col">
               <h2 className="px-4 mb-2 text-xl">
-                Generate blog topics to write about 💡
+                Generate blog topics ideas 💡
               </h2>
               <form className="px-4" onSubmit={(e) => generateBlogTopics(e)}>
                 <div className="flex space-x-5 items-center">
                   <input
                     className="border outline-none font-light rounded-md p-2 w-[340px] focus:border-blue-400 transition duration-300 ease-in-out"
-                    placeholder="Enter a blog topic.. (ex. Madrid, Paris, Lisbon)"
+                    placeholder="Enter a blog topic.."
                     value={idea.topic}
                     onChange={(e) =>
                       setIdea({
@@ -208,13 +276,13 @@ export default function Home() {
             <div className="border my-5"></div>
             <div className="flex flex-col space-y-4">
               <h2 className="px-4 mb-2 text-xl">
-                Generate an outline to better organize your blog ✅
+                Generate an outline to better organize your blog 📝
               </h2>
               <form className="px-4" onSubmit={(e) => generateBlogOutline(e)}>
                 <div className="flex space-x-5 items-center">
                   <input
                     className="border outline-none font-light rounded-md p-2 w-[340px] focus:border-blue-400 transition duration-300 ease-in-out"
-                    placeholder="Enter a blog topic.. (ex. Madrid, Paris, Lisbon)"
+                    placeholder="Enter a blog title/topic..."
                     value={idea.outline}
                     onChange={(e) =>
                       setIdea({
@@ -245,13 +313,87 @@ export default function Home() {
             <div className="border my-5"></div>
             <div className="flex flex-col space-y-4">
               <h2 className="px-4 mb-2 text-xl">
+                Generate a blog post intro paragraph ⚡️
+              </h2>
+              <form className="px-4" onSubmit={(e) => generateBlogIntro(e)}>
+                <div className="flex space-x-5 items-center">
+                  <input
+                    className="border outline-none font-light rounded-md p-2 w-[340px] focus:border-blue-400 transition duration-300 ease-in-out"
+                    placeholder="Enter a blog title..."
+                    value={idea.intro}
+                    onChange={(e) =>
+                      setIdea({
+                        ...idea,
+                        intro: e.target.value,
+                      })
+                    }
+                  />
+                  {loading.intro && <Loading />}
+                  {!loading.intro && (
+                    <button
+                      className="bg-gradient-to-r cursor-pointer from-indigo-500 via-purple-500 to-pink-500 text-white p-2 rounded-md w-[10rem] hover:scale-105 transition duration-300 ease-in-out disabled:opacity-25 disabled:scale-95"
+                      disabled={!idea.intro}
+                    >
+                      Submit
+                    </button>
+                  )}
+                </div>
+              </form>
+              <div className="px-4 mt-5">
+                {blogIntro?.map((text) => (
+                  <p key={text} className="text-sm font-medium mb-4">
+                    {text}
+                  </p>
+                ))}
+              </div>
+            </div>
+            <div className="border my-5"></div>
+            <div className="flex flex-col space-y-4">
+              <h2 className="px-4 mb-2 text-xl">
+                Generate a blog post outro paragraph 🌗
+              </h2>
+              <form className="px-4" onSubmit={(e) => generateBlogOutro(e)}>
+                <div className="flex space-x-5 items-center">
+                  <input
+                    className="border outline-none font-light rounded-md p-2 w-[340px] focus:border-blue-400 transition duration-300 ease-in-out"
+                    placeholder="Enter a blog title..."
+                    value={idea.outro}
+                    onChange={(e) =>
+                      setIdea({
+                        ...idea,
+                        outro: e.target.value,
+                      })
+                    }
+                  />
+                  {loading.outro && <Loading />}
+                  {!loading.outro && (
+                    <button
+                      className="bg-gradient-to-r cursor-pointer from-indigo-500 via-purple-500 to-pink-500 text-white p-2 rounded-md w-[10rem] hover:scale-105 transition duration-300 ease-in-out disabled:opacity-25 disabled:scale-95"
+                      disabled={!idea.outro}
+                    >
+                      Submit
+                    </button>
+                  )}
+                </div>
+              </form>
+              <div className="px-4 mt-5">
+                {blogOutro?.map((text) => (
+                  <p key={text} className="text-sm font-medium mb-4">
+                    {text}
+                  </p>
+                ))}
+              </div>
+            </div>
+            <div className="border my-5"></div>
+            <div className="flex flex-col space-y-4">
+              <h2 className="px-4 mb-2 text-xl">
                 Generate an attention-grabbing headline for your blog ⭐️
               </h2>
               <form className="px-4" onSubmit={(e) => generateBlogHeadlines(e)}>
                 <div className="flex space-x-5 items-center">
                   <input
                     className="border outline-none font-light rounded-md p-2 w-[340px] focus:border-blue-400 transition duration-300 ease-in-out"
-                    placeholder="Enter a blog topic.. (ex. Madrid, Paris, Lisbon)"
+                    placeholder="Enter a blog topic..."
                     value={idea.headline}
                     onChange={(e) =>
                       setIdea({
@@ -288,7 +430,7 @@ export default function Home() {
                 <div className="flex space-x-5 items-center">
                   <input
                     className="border font-light outline-none rounded-md p-2 w-[340px] focus:border-blue-400 transition duration-300 ease-in-out"
-                    placeholder="Enter a blog topic.. (ex. Madrid, Paris, Lisbon)"
+                    placeholder="Enter a blog title/topic..."
                     value={idea.article}
                     onChange={(e) =>
                       setIdea({
