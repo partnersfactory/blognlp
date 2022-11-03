@@ -1,8 +1,11 @@
 import React, { useState, useMemo } from "react";
 import { Seo } from "../components/Seo";
 import { CreateCompletionResponseChoicesInner } from "openai";
+import { useOpenAI } from "../hooks/useOpenAi";
 
 export default function Home() {
+  const openAI = useOpenAI();
+
   const [idea, setIdea] = useState({
     topic: "",
     headline: "",
@@ -35,19 +38,22 @@ export default function Home() {
       ...loading,
       topic: true,
     });
-    const response = await fetch("/api/topics", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ text: idea.topic }),
+    const response = await openAI.createCompletion({
+      model: "text-davinci-002",
+      prompt: `Generate blog topics on ${idea.topic}.`,
+      temperature: 0.8,
+      max_tokens: 200,
+      top_p: 1,
+      frequency_penalty: 0.5,
+      presence_penalty: 0,
+      user: "user123456",
     });
-    const data = await response.json();
+
     setLoading({
       ...loading,
       topic: false,
     });
-    setTopics(data.result.choices as CreateCompletionResponseChoicesInner[]);
+    setTopics(response.data.choices);
   };
 
   const generateBlogHeadlines = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -99,6 +105,17 @@ export default function Home() {
     setLoading({
       ...loading,
       article: true,
+    });
+
+    const response = await openai.createCompletion({
+      model: "text-davinci-002",
+      prompt: `Generate a detailed professional, witty blog article on ${req.body.text}.`,
+      temperature: 0.8,
+      max_tokens: 1500,
+      top_p: 1,
+      frequency_penalty: 0.5,
+      presence_penalty: 0,
+      user: "user123456",
     });
 
     const response = await fetch("/api/article", {
