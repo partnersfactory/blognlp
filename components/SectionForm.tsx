@@ -36,7 +36,7 @@ export const SectionForm = ({
             <textarea
               className="border outline-none font-light rounded-md p-2 w-[340px] focus:border-blue-400 transition duration-300 ease-in-out"
               placeholder={placeholder}
-              rows={10}
+              rows={8}
               value={value}
               onChange={onChange}
             />
