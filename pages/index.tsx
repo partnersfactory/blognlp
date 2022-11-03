@@ -2,7 +2,7 @@ import React, { useState, useMemo } from "react";
 import { Seo } from "../components/Seo";
 import { CreateCompletionResponseChoicesInner } from "openai";
 import { useOpenAI } from "../hooks/useOpenAI";
-import { SectionForm } from "../components/SectionForm";
+import { SectionForm, TextType } from "../components/SectionForm";
 
 export default function Home() {
   const openAI = useOpenAI();
@@ -334,7 +334,7 @@ export default function Home() {
             <div className="border my-5"></div>
             <SectionForm
               title="Detect tone of voice 🎶"
-              type="tone"
+              type={TextType.TEXTAREA}
               placeholder="Enter written content..."
               value={idea.tone}
               onSubmit={(e) => generateBlogTone(e)}
@@ -381,25 +381,23 @@ export default function Home() {
         </div>
       </div>
 
-      <footer className="flex w-[15rem] mx-auto text-center justify-center space-y-2 flex-col items-center mb-10 text-xs">
-        <span>
-          Designed & built by
-          <a
-            target="_blank"
-            rel="noreferrer"
-            className="ml-1 underline"
-            href="https://kelvinbrito.dev"
-          >
-            Kelvin Brito
-          </a>
-        </span>
+      <footer className="flex w-[20rem] mx-auto text-center justify-center space-y-2 flex-col items-center mb-10 text-xs">
+        <span>Designed & built by Kelvin Brito</span>
+        <a
+          target="_blank"
+          rel="noreferrer"
+          className="text-sm font-bold hover:text-blue-800 transition duration-200 ease-in-out"
+          href="mailto:britok30@gmail.com"
+        >
+          Contact Me
+        </a>
         <span>
           Made with ❤️ with Next.js, TypeScript, Tailwind &{" "}
           <a target="_blank" rel="noreferrer" href="https://openai.com/api/">
             Open AI&apos;s GPT-3
           </a>
         </span>
-        <span>{new Date().getFullYear()}</span>
+        <span>Copyright © {new Date().getFullYear()} All rights reserved.</span>
       </footer>
     </div>
   );

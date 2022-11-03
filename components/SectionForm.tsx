@@ -1,8 +1,13 @@
 import React from "react";
 
+export enum TextType {
+  INPUT = "input",
+  TEXTAREA = "textarea",
+}
+
 export const SectionForm = ({
   title,
-  type,
+  type = TextType.INPUT,
   placeholder,
   onSubmit,
   value,
@@ -11,7 +16,7 @@ export const SectionForm = ({
   blogText,
 }: {
   title: string;
-  type?: string;
+  type?: TextType;
   placeholder: string;
   onSubmit: React.FormEventHandler<HTMLFormElement>;
   value: string;
@@ -24,7 +29,7 @@ export const SectionForm = ({
       <h2 className="px-4 mb-2 text-xl">{title}</h2>
       <form className="px-4" onSubmit={onSubmit}>
         <div className="flex space-x-5 items-center">
-          {type !== "tone" && (
+          {type === TextType.INPUT && (
             <input
               className="border outline-none font-light rounded-md p-2 w-[340px] focus:border-blue-400 transition duration-300 ease-in-out"
               placeholder={placeholder}
@@ -32,7 +37,7 @@ export const SectionForm = ({
               onChange={onChange}
             />
           )}
-          {type === "tone" && (
+          {type === TextType.TEXTAREA && (
             <textarea
               className="border outline-none font-light rounded-md p-2 w-[340px] focus:border-blue-400 transition duration-300 ease-in-out"
               placeholder={placeholder}
