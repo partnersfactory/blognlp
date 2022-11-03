@@ -256,22 +256,22 @@ export default function Home() {
     <div>
       <Seo />
 
-      <div className="min-h-screen w-full py-5 px-2 text-black md:flex md:items-center md:justify-center">
-        <div className="flex flex-col md:flex-row justify-center items-center md:gap-4">
+      <div className="min-h-screen w-full py-10 px-4 md:px-0 text-black md:flex md:items-center md:justify-center">
+        <div className="flex flex-col justify-center items-center md:gap-4">
           <div>
-            <h1 className="m-0 text-6xl font-medium mb-2">
+            <h1 className="m-0 text-6xl font-medium mb-4">
               BlogNLP{" "}
               <span role="img" aria-label="writing-hand">
                 ✍️
               </span>
             </h1>
-            <p className="w-full text-sm md:w-[500px] mb-5">
+            <p className="w-full text-sm md:w-[650px] mb-5">
               BlogNLP is a free AI blog writing tool that helps you break your
               writer&apos;s block to create original content in a fraction of a
               time. Powered by Open AI&apos;s GPT-3.
             </p>
           </div>
-          <main className="flex flex-col overflow-y-scroll w-full py-3 md:w-[650px] max-h-[650px]">
+          <main className="flex flex-col w-full md:w-[650px]">
             <SectionForm
               title="Generate blog topics ideas 💡"
               placeholder="Enter a blog topic..."
