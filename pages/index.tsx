@@ -237,7 +237,7 @@ export default function Home() {
               time. Powered by Open AI&apos;s GPT-3.
             </p>
           </div>
-          <main className="flex flex-col overflow-y-scroll w-full md:w-[650px] max-h-[700px]">
+          <main className="flex flex-col overflow-y-scroll w-full py-3 md:w-[650px] max-h-[650px]">
             <SectionForm
               title="Generate blog topics ideas 💡"
               value={idea.topic}
