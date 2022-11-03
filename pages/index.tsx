@@ -1,11 +1,10 @@
 import React, { useState, useMemo } from "react";
 import { Seo } from "../components/Seo";
 import { CreateCompletionResponseChoicesInner } from "openai";
-import { useOpenAI } from "../hooks/useOpenAi";
+import { useOpenAI } from "../hooks/useOpenAI";
 
 export default function Home() {
   const openAI = useOpenAI();
-
   const [idea, setIdea] = useState({
     topic: "",
     headline: "",
