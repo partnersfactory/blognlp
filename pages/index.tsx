@@ -44,7 +44,7 @@ export default function Home() {
       temperature: 0.8,
       max_tokens: 200,
       top_p: 1,
-      frequency_penalty: 0.5,
+      frequency_penalty: 0.8,
       presence_penalty: 0,
       user: "user123456",
     });
@@ -62,20 +62,22 @@ export default function Home() {
       ...loading,
       headline: true,
     });
-    const response = await fetch("/api/headline", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ text: idea.headline }),
+    const response = await openAI.createCompletion({
+      model: "text-davinci-002",
+      prompt: `Generate attention-grabbing blog headlines on ${idea.headline}.`,
+      temperature: 0.8,
+      max_tokens: 200,
+      top_p: 1,
+      frequency_penalty: 0.8,
+      presence_penalty: 0,
+      user: "user123456",
     });
-    const data = await response.json();
 
     setLoading({
       ...loading,
       headline: false,
     });
-    setHeadlines(data.result.choices as CreateCompletionResponseChoicesInner[]);
+    setHeadlines(response.data.choices);
   };
 
   const generateBlogOutline = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -84,20 +86,22 @@ export default function Home() {
       ...loading,
       outline: true,
     });
-    const response = await fetch("/api/outline", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ text: idea.outline }),
+    const response = await openAI.createCompletion({
+      model: "text-davinci-002",
+      prompt: `Generate a blog outline with high level blog sections on ${idea.outline}.`,
+      temperature: 0.8,
+      max_tokens: 250,
+      top_p: 1,
+      frequency_penalty: 0.8,
+      presence_penalty: 0,
+      user: "user123456",
     });
-    const data = await response.json();
 
     setLoading({
       ...loading,
       outline: false,
     });
-    setOutline(data.result.choices as CreateCompletionResponseChoicesInner[]);
+    setOutline(response.data.choices);
   };
 
   const generateBlogArticle = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -106,32 +110,22 @@ export default function Home() {
       ...loading,
       article: true,
     });
-
-    const response = await openai.createCompletion({
+    const response = await openAI.createCompletion({
       model: "text-davinci-002",
-      prompt: `Generate a detailed professional, witty blog article on ${req.body.text}.`,
+      prompt: `Generate a detailed professional, witty blog article on ${idea.article}.`,
       temperature: 0.8,
-      max_tokens: 1500,
+      max_tokens: 2500,
       top_p: 1,
-      frequency_penalty: 0.5,
+      frequency_penalty: 0.8,
       presence_penalty: 0,
       user: "user123456",
     });
-
-    const response = await fetch("/api/article", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ text: idea.article }),
-    });
-    const data = await response.json();
 
     setLoading({
       ...loading,
       article: false,
     });
-    setArticle(data.result.choices as CreateCompletionResponseChoicesInner[]);
+    setArticle(response.data.choices);
   };
 
   const blogTopics: string[] | undefined = useMemo(() => {
