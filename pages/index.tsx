@@ -172,7 +172,7 @@ export default function Home() {
       model: "text-davinci-002",
       prompt: `Generate a detailed professional, witty blog article on ${idea.article}.`,
       temperature: 0.8,
-      max_tokens: 2500,
+      max_tokens: 3000,
       top_p: 1,
       frequency_penalty: 0.8,
       presence_penalty: 0,
