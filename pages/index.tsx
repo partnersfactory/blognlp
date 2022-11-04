@@ -153,7 +153,7 @@ export default function Home() {
       ...loading,
       section: true,
     });
-    const response = await axios.post("/api/paragraph", {
+    const response = await axios.post("/api/section", {
       text: idea.section,
     });
     setLoading({
