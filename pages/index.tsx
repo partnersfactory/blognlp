@@ -1,13 +1,10 @@
 import React, { useState, useMemo } from "react";
 import { Seo } from "../components/Seo";
-import { Sun, Moon } from "react-feather";
 import { CreateCompletionResponseChoicesInner } from "openai";
-import { useOpenAI } from "../hooks/useOpenAI";
 import { SectionForm, TextType } from "../components/SectionForm";
 import axios from "axios";
 
 export default function Home() {
-  const openAI = useOpenAI();
   const [idea, setIdea] = useState({
     topic: "",
     intro: "",
