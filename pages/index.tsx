@@ -12,7 +12,7 @@ export default function Home() {
     headline: "",
     outline: "",
     tone: "",
-    article: "",
+    section: "",
   });
   const [loading, setLoading] = useState({
     topic: false,
@@ -21,7 +21,7 @@ export default function Home() {
     headline: false,
     outline: false,
     tone: false,
-    article: false,
+    section: false,
   });
 
   const [topics, setTopics] = useState<
@@ -42,7 +42,7 @@ export default function Home() {
   const [tone, setTone] = useState<
     CreateCompletionResponseChoicesInner[] | null
   >(null);
-  const [article, setArticle] = useState<
+  const [section, setSection] = useState<
     CreateCompletionResponseChoicesInner[] | null
   >(null);
 
@@ -147,20 +147,20 @@ export default function Home() {
     setOutline(response.data.result.choices);
   };
 
-  const generateBlogArticle = async (e: React.FormEvent<HTMLFormElement>) => {
+  const generateSectionExpand = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading({
       ...loading,
-      article: true,
+      section: true,
     });
-    const response = await axios.post("/api/article", {
-      text: idea.article,
+    const response = await axios.post("/api/paragraph", {
+      text: idea.section,
     });
     setLoading({
       ...loading,
-      article: false,
+      section: false,
     });
-    setArticle(response.data.result.choices);
+    setSection(response.data.result.choices);
   };
 
   const blogTopics: string[] | undefined = useMemo(() => {
@@ -183,10 +183,10 @@ export default function Home() {
     return outro[0].text?.split("\n").filter((outro) => outro.length > 0);
   }, [outro]);
 
-  const blogArticle: string[] | undefined = useMemo(() => {
-    if (!article) return [];
-    return article[0].text?.split("\n").filter((article) => article.length > 0);
-  }, [article]);
+  const blogSection: string[] | undefined = useMemo(() => {
+    if (!section) return [];
+    return section[0].text?.split("\n").filter((sec) => sec.length > 0);
+  }, [section]);
 
   const blogHeadlines: string[] | undefined = useMemo(() => {
     if (!headlines) return [];
@@ -315,18 +315,18 @@ export default function Home() {
             />
             <div className="border my-5"></div>
             <SectionForm
-              title="Generate a professionally written blog for inspiration ✨"
-              placeholder="Enter a blog topic..."
-              value={idea.article}
-              onSubmit={(e) => generateBlogArticle(e)}
+              title="Generate a paragraph for a given blog section ✨"
+              placeholder="Enter a blog section..."
+              value={idea.section}
+              onSubmit={(e) => generateSectionExpand(e)}
               onChange={(e) =>
                 setIdea({
                   ...idea,
-                  article: e.target.value,
+                  section: e.target.value,
                 })
               }
-              isLoading={loading.article}
-              blogText={blogArticle}
+              isLoading={loading.section}
+              blogText={blogSection}
             />
           </main>
         </div>
