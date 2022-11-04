@@ -13,6 +13,7 @@ export default function Home() {
     outline: "",
     tone: "",
     section: "",
+    keywords: "",
   });
   const [loading, setLoading] = useState({
     topic: false,
@@ -22,6 +23,7 @@ export default function Home() {
     outline: false,
     tone: false,
     section: false,
+    keywords: false,
   });
 
   const [topics, setTopics] = useState<
@@ -43,6 +45,9 @@ export default function Home() {
     CreateCompletionResponseChoicesInner[] | null
   >(null);
   const [section, setSection] = useState<
+    CreateCompletionResponseChoicesInner[] | null
+  >(null);
+  const [keywords, setKeywords] = useState<
     CreateCompletionResponseChoicesInner[] | null
   >(null);
 
@@ -163,6 +168,22 @@ export default function Home() {
     setSection(response.data.result.choices);
   };
 
+  const generateBlogKeywords = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading({
+      ...loading,
+      keywords: true,
+    });
+    const response = await axios.post("/api/keywords", {
+      text: idea.keywords,
+    });
+    setLoading({
+      ...loading,
+      keywords: false,
+    });
+    setKeywords(response.data.result.choices);
+  };
+
   const blogTopics: string[] | undefined = useMemo(() => {
     if (!topics) return [];
     return topics[0].text?.split("\n").filter((topic) => topic.length > 0);
@@ -187,6 +208,11 @@ export default function Home() {
     if (!section) return [];
     return section[0].text?.split("\n").filter((sec) => sec.length > 0);
   }, [section]);
+
+  const blogKeywords: string[] | undefined = useMemo(() => {
+    if (!keywords) return [];
+    return keywords[0].text?.split("\n").filter((keyword) => keyword.length > 0);
+  }, [keywords]);
 
   const blogHeadlines: string[] | undefined = useMemo(() => {
     if (!headlines) return [];
@@ -327,6 +353,21 @@ export default function Home() {
               }
               isLoading={loading.section}
               blogText={blogSection}
+            />
+            <div className="border my-5"></div>
+            <SectionForm
+              title="Generate SEO keywords for your blog 🔑"
+              placeholder="Enter a blog topic..."
+              value={idea.keywords}
+              onSubmit={(e) => generateBlogKeywords(e)}
+              onChange={(e) =>
+                setIdea({
+                  ...idea,
+                  keywords: e.target.value,
+                })
+              }
+              isLoading={loading.keywords}
+              blogText={blogKeywords}
             />
           </main>
         </div>
