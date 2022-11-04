@@ -422,7 +422,17 @@ export default function Home() {
       </div>
 
       <footer className="flex w-[20rem] mx-auto text-center justify-center space-y-2 flex-col items-center mb-10 text-xs">
-        <span>Designed & built by Kelvin Brito</span>
+        <span>
+          Designed & built by{" "}
+          <a
+            target="_blank"
+            rel="noreferrer"
+            className="font-bold hover:text-blue-800 transition duration-200 ease-in-out"
+            href="https://www.kelvinbrito.dev"
+          >
+            Kelvin Brito
+          </a>
+        </span>
         <a
           target="_blank"
           rel="noreferrer"
