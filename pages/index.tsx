@@ -150,6 +150,22 @@ export default function Home() {
     setOutline(response.data.result.choices);
   };
 
+  const generateBlogArticle = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading({
+      ...loading,
+      article: true,
+    });
+    const response = await axios.post("/api/article", {
+      text: idea.article,
+    });
+    setLoading({
+      ...loading,
+      article: false,
+    });
+    setArticle(response.data.result.choices);
+  };
+
   // const generateBlogTopics = async (e: React.FormEvent<HTMLFormElement>) => {
   //   e.preventDefault();
   //   setLoading({
@@ -294,29 +310,29 @@ export default function Home() {
   //   setTone(response.data.choices);
   // };
 
-  const generateBlogArticle = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setLoading({
-      ...loading,
-      article: true,
-    });
-    const response = await openAI.createCompletion({
-      model: "text-davinci-002",
-      prompt: `Generate an engaging detailed blog post with an intro, body, and conclusion on ${idea.article}.`,
-      temperature: 0.9,
-      max_tokens: 4000,
-      top_p: 1,
-      frequency_penalty: 0.8,
-      presence_penalty: 0,
-      user: "user123456",
-    });
+  // const generateBlogArticle = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   setLoading({
+  //     ...loading,
+  //     article: true,
+  //   });
+  //   const response = await openAI.createCompletion({
+  //     model: "text-davinci-002",
+  //     prompt: `Generate an engaging detailed blog post with an intro, body, and conclusion on ${idea.article}.`,
+  //     temperature: 0.9,
+  //     max_tokens: 4000,
+  //     top_p: 1,
+  //     frequency_penalty: 0.8,
+  //     presence_penalty: 0,
+  //     user: "user123456",
+  //   });
 
-    setLoading({
-      ...loading,
-      article: false,
-    });
-    setArticle(response.data.choices);
-  };
+  //   setLoading({
+  //     ...loading,
+  //     article: false,
+  //   });
+  //   setArticle(response.data.choices);
+  // };
 
   const blogTopics: string[] | undefined = useMemo(() => {
     if (!topics) return [];
