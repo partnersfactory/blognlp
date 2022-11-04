@@ -35,12 +35,12 @@ export const Seo = () => {
       />
       <meta name="twitter:image" content="https://blognlp.com/main.png" />
       <link rel="canonical" key="canonical" href={canonicalUrl} />
-      <MainPage />
+      <GoogleAds />
     </Head>
   );
 };
 
-const MainPage = () => {
+export const GoogleAds = () => {
   return (
     <Script
       async
