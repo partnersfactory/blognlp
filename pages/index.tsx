@@ -4,6 +4,7 @@ import { Sun, Moon } from "react-feather";
 import { CreateCompletionResponseChoicesInner } from "openai";
 import { useOpenAI } from "../hooks/useOpenAI";
 import { SectionForm, TextType } from "../components/SectionForm";
+import axios from "axios";
 
 export default function Home() {
   const openAI = useOpenAI();
@@ -54,22 +55,14 @@ export default function Home() {
       ...loading,
       topic: true,
     });
-    const response = await openAI.createCompletion({
-      model: "text-davinci-002",
-      prompt: `Generate new blog post topics that will engage readers regarding ${idea.topic}.`,
-      temperature: 0.8,
-      max_tokens: 200,
-      top_p: 1,
-      frequency_penalty: 0.8,
-      presence_penalty: 0,
-      user: "user123456",
+    const response = await axios.post("/api/topics", {
+      text: idea.topic,
     });
-
     setLoading({
       ...loading,
       topic: false,
     });
-    setTopics(response.data.choices);
+    setTopics(response.data.result.choices);
   };
 
   const generateBlogIntro = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -78,22 +71,15 @@ export default function Home() {
       ...loading,
       intro: true,
     });
-    const response = await openAI.createCompletion({
-      model: "text-davinci-002",
-      prompt: `Generate the opening paragraph for a blog titled ${idea.intro}.`,
-      temperature: 0.8,
-      max_tokens: 350,
-      top_p: 1,
-      frequency_penalty: 0.8,
-      presence_penalty: 0,
-      user: "user123456",
+    const response = await axios.post("/api/intro", {
+      text: idea.intro,
     });
 
     setLoading({
       ...loading,
       intro: false,
     });
-    setIntro(response.data.choices);
+    setIntro(response.data.result.choices);
   };
 
   const generateBlogOutro = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -102,22 +88,15 @@ export default function Home() {
       ...loading,
       outro: true,
     });
-    const response = await openAI.createCompletion({
-      model: "text-davinci-002",
-      prompt: `Generate the final concluding paragraph for a blog titled ${idea.outro}.`,
-      temperature: 0.8,
-      max_tokens: 350,
-      top_p: 1,
-      frequency_penalty: 0.8,
-      presence_penalty: 0,
-      user: "user123456",
+    const response = await axios.post("/api/outro", {
+      text: idea.outro,
     });
 
     setLoading({
       ...loading,
       outro: false,
     });
-    setOutro(response.data.choices);
+    setOutro(response.data.result.choices);
   };
 
   const generateBlogHeadlines = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -126,46 +105,15 @@ export default function Home() {
       ...loading,
       headline: true,
     });
-    const response = await openAI.createCompletion({
-      model: "text-davinci-002",
-      prompt: `Generate attention-grabbing blog headlines on ${idea.headline}.`,
-      temperature: 0.8,
-      max_tokens: 200,
-      top_p: 1,
-      frequency_penalty: 0.8,
-      presence_penalty: 0,
-      user: "user123456",
+    const response = await axios.post("/api/headlines", {
+      text: idea.headline,
     });
 
     setLoading({
       ...loading,
       headline: false,
     });
-    setHeadlines(response.data.choices);
-  };
-
-  const generateBlogOutline = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setLoading({
-      ...loading,
-      outline: true,
-    });
-    const response = await openAI.createCompletion({
-      model: "text-davinci-002",
-      prompt: `Create lists and outlines for articles regarding ${idea.outline}.`,
-      temperature: 0.8,
-      max_tokens: 250,
-      top_p: 1,
-      frequency_penalty: 0.8,
-      presence_penalty: 0,
-      user: "user123456",
-    });
-
-    setLoading({
-      ...loading,
-      outline: false,
-    });
-    setOutline(response.data.choices);
+    setHeadlines(response.data.result.choices);
   };
 
   const generateBlogTone = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -174,23 +122,177 @@ export default function Home() {
       ...loading,
       tone: true,
     });
-    const response = await openAI.createCompletion({
-      model: "text-davinci-002",
-      prompt: `Detect the tone of voice based on the provided written content: ${idea.tone}.`,
-      temperature: 0.8,
-      max_tokens: 250,
-      top_p: 1,
-      frequency_penalty: 0.8,
-      presence_penalty: 0,
-      user: "user123456",
+    const response = await axios.post("/api/tone", {
+      text: idea.tone,
     });
 
     setLoading({
       ...loading,
       tone: false,
     });
-    setTone(response.data.choices);
+    setTone(response.data.result.choices);
   };
+
+  const generateBlogOutline = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading({
+      ...loading,
+      outline: true,
+    });
+    const response = await axios.post("/api/outline", {
+      text: idea.outline,
+    });
+
+    setLoading({
+      ...loading,
+      outline: false,
+    });
+    setOutline(response.data.result.choices);
+  };
+
+  // const generateBlogTopics = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   setLoading({
+  //     ...loading,
+  //     topic: true,
+  //   });
+  //   const response = await openAI.createCompletion({
+  //     model: "text-davinci-002",
+  //     prompt: `Generate new blog post topics that will engage readers regarding ${idea.topic}.`,
+  //     temperature: 0.8,
+  //     max_tokens: 200,
+  //     top_p: 1,
+  //     frequency_penalty: 0.8,
+  //     presence_penalty: 0,
+  //     user: "user123456",
+  //   });
+
+  //   setLoading({
+  //     ...loading,
+  //     topic: false,
+  //   });
+  //   setTopics(response.data.choices);
+  // };
+
+  // const generateBlogIntro = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   setLoading({
+  //     ...loading,
+  //     intro: true,
+  //   });
+  //   const response = await openAI.createCompletion({
+  //     model: "text-davinci-002",
+  //     prompt: `Generate the opening paragraph for a blog titled ${idea.intro}.`,
+  //     temperature: 0.8,
+  //     max_tokens: 350,
+  //     top_p: 1,
+  //     frequency_penalty: 0.8,
+  //     presence_penalty: 0,
+  //     user: "user123456",
+  //   });
+
+  //   setLoading({
+  //     ...loading,
+  //     intro: false,
+  //   });
+  //   setIntro(response.data.choices);
+  // };
+
+  // const generateBlogOutro = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   setLoading({
+  //     ...loading,
+  //     outro: true,
+  //   });
+  //   const response = await openAI.createCompletion({
+  //     model: "text-davinci-002",
+  //     prompt: `Generate the final concluding paragraph for a blog titled ${idea.outro}.`,
+  //     temperature: 0.8,
+  //     max_tokens: 350,
+  //     top_p: 1,
+  //     frequency_penalty: 0.8,
+  //     presence_penalty: 0,
+  //     user: "user123456",
+  //   });
+
+  //   setLoading({
+  //     ...loading,
+  //     outro: false,
+  //   });
+  //   setOutro(response.data.choices);
+  // };
+
+  // const generateBlogHeadlines = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   setLoading({
+  //     ...loading,
+  //     headline: true,
+  //   });
+  //   const response = await openAI.createCompletion({
+  //     model: "text-davinci-002",
+  //     prompt: `Generate attention-grabbing blog headlines on ${idea.headline}.`,
+  //     temperature: 0.8,
+  //     max_tokens: 200,
+  //     top_p: 1,
+  //     frequency_penalty: 0.8,
+  //     presence_penalty: 0,
+  //     user: "user123456",
+  //   });
+
+  //   setLoading({
+  //     ...loading,
+  //     headline: false,
+  //   });
+  //   setHeadlines(response.data.choices);
+  // };
+
+  // const generateBlogOutline = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   setLoading({
+  //     ...loading,
+  //     outline: true,
+  //   });
+  //   const response = await openAI.createCompletion({
+  //     model: "text-davinci-002",
+  //     prompt: `Create lists and outlines for articles regarding ${idea.outline}.`,
+  //     temperature: 0.8,
+  //     max_tokens: 250,
+  //     top_p: 1,
+  //     frequency_penalty: 0.8,
+  //     presence_penalty: 0,
+  //     user: "user123456",
+  //   });
+
+  //   setLoading({
+  //     ...loading,
+  //     outline: false,
+  //   });
+  //   setOutline(response.data.choices);
+  // };
+
+  // const generateBlogTone = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   setLoading({
+  //     ...loading,
+  //     tone: true,
+  //   });
+  //   const response = await openAI.createCompletion({
+  //     model: "text-davinci-002",
+  //     prompt: `Detect the tone of voice based on the provided written content: ${idea.tone}.`,
+  //     temperature: 0.8,
+  //     max_tokens: 250,
+  //     top_p: 1,
+  //     frequency_penalty: 0.8,
+  //     presence_penalty: 0,
+  //     user: "user123456",
+  //   });
+
+  //   setLoading({
+  //     ...loading,
+  //     tone: false,
+  //   });
+  //   setTone(response.data.choices);
+  // };
 
   const generateBlogArticle = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
