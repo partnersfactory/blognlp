@@ -224,7 +224,7 @@ export default function Home() {
           </div>
           <main className="flex flex-col w-full md:w-[650px]">
             <SectionForm
-              title="Generate blog topics ideas 💡"
+              title="Generate blog topic ideas 💡"
               placeholder="Enter a blog topic..."
               value={idea.topic}
               onSubmit={(e) => generateBlogTopics(e)}
