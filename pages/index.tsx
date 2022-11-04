@@ -254,7 +254,7 @@ export default function Home() {
             />
             <div className="border my-5"></div>
             <SectionForm
-              title="Generate a blog post intro paragraph ⚡️"
+              title="Generate a blog intro paragraph ⚡️"
               placeholder="Enter a blog title..."
               value={idea.intro}
               onSubmit={(e) => generateBlogIntro(e)}
@@ -269,7 +269,7 @@ export default function Home() {
             />
             <div className="border my-5"></div>
             <SectionForm
-              title="Generate a blog post outro paragraph 🌗"
+              title="Generate a blog outro paragraph 🌗"
               placeholder="Enter a blog title..."
               value={idea.outro}
               onSubmit={(e) => generateBlogOutro(e)}
