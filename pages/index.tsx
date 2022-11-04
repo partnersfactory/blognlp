@@ -14,6 +14,7 @@ export default function Home() {
     tone: "",
     section: "",
     keywords: "",
+    rewrite: "",
   });
   const [loading, setLoading] = useState({
     topic: false,
@@ -24,6 +25,7 @@ export default function Home() {
     tone: false,
     section: false,
     keywords: false,
+    rewrite: false,
   });
 
   const [topics, setTopics] = useState<
@@ -48,6 +50,9 @@ export default function Home() {
     CreateCompletionResponseChoicesInner[] | null
   >(null);
   const [keywords, setKeywords] = useState<
+    CreateCompletionResponseChoicesInner[] | null
+  >(null);
+  const [rewrite, setRewrite] = useState<
     CreateCompletionResponseChoicesInner[] | null
   >(null);
 
@@ -184,6 +189,24 @@ export default function Home() {
     setKeywords(response.data.result.choices);
   };
 
+  const generateSentenceRewrite = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
+    e.preventDefault();
+    setLoading({
+      ...loading,
+      rewrite: true,
+    });
+    const response = await axios.post("/api/rewrite", {
+      text: idea.rewrite,
+    });
+    setLoading({
+      ...loading,
+      rewrite: false,
+    });
+    setRewrite(response.data.result.choices);
+  };
+
   const blogTopics: string[] | undefined = useMemo(() => {
     if (!topics) return [];
     return topics[0].text?.split("\n").filter((topic) => topic.length > 0);
@@ -211,7 +234,9 @@ export default function Home() {
 
   const blogKeywords: string[] | undefined = useMemo(() => {
     if (!keywords) return [];
-    return keywords[0].text?.split("\n").filter((keyword) => keyword.length > 0);
+    return keywords[0].text
+      ?.split("\n")
+      .filter((keyword) => keyword.length > 0);
   }, [keywords]);
 
   const blogHeadlines: string[] | undefined = useMemo(() => {
@@ -225,6 +250,13 @@ export default function Home() {
     if (!tone) return [];
     return tone[0].text?.split("\n").filter((topic) => topic.length > 0);
   }, [tone]);
+
+  const sentenceRewrite: string[] | undefined = useMemo(() => {
+    if (!rewrite) return [];
+    return rewrite[0].text
+      ?.split("\n")
+      .filter((sentence) => sentence.length > 0);
+  }, [rewrite]);
 
   return (
     <div>
@@ -369,6 +401,22 @@ export default function Home() {
               isLoading={loading.keywords}
               blogText={blogKeywords}
             />
+            <div className="border my-5"></div>
+            <SectionForm
+              title="Rewrite your sentences ✏️"
+              placeholder="Enter a sentence..."
+              type={TextType.TEXTAREA}
+              value={idea.rewrite}
+              onSubmit={(e) => generateSentenceRewrite(e)}
+              onChange={(e) =>
+                setIdea({
+                  ...idea,
+                  rewrite: e.target.value,
+                })
+              }
+              isLoading={loading.rewrite}
+              blogText={sentenceRewrite}
+            />
           </main>
         </div>
       </div>
@@ -378,7 +426,7 @@ export default function Home() {
         <a
           target="_blank"
           rel="noreferrer"
-          className="text-sm font-bold hover:text-blue-800 transition duration-200 ease-in-out"
+          className="text-xs font-bold hover:text-blue-800 transition duration-200 ease-in-out"
           href="mailto:britok30@gmail.com"
         >
           Contact Me
