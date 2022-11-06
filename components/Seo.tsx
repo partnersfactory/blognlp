@@ -35,17 +35,11 @@ export const Seo = () => {
       />
       <meta name="twitter:image" content="https://blognlp.com/main.png" />
       <link rel="canonical" key="canonical" href={canonicalUrl} />
-      <GoogleAds />
+      <script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6672834098859869"
+        crossOrigin="anonymous"
+      ></script>
     </Head>
-  );
-};
-
-export const GoogleAds = () => {
-  return (
-    <Script
-      async
-      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6672834098859869"
-      crossOrigin="anonymous"
-    />
   );
 };
