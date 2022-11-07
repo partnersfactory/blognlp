@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: www.blognlp.com
+Host: https://www.blognlp.com
 
 # Sitemaps
-Sitemap: www.blognlp.com/sitemap.xml
+Sitemap: https://www.blognlp.com/sitemap.xml
