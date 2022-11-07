@@ -16,7 +16,7 @@ export default async function handler(
 ) {
   const completion = await openai.createCompletion({
     model: "text-davinci-002",
-    prompt: `Generate attention-grabbing blog headlines on ${req.body.text}.`,
+    prompt: `Generate attention-grabbing blog headlines about ${req.body.text}.`,
     temperature: 0.8,
     max_tokens: 200,
     top_p: 1,

@@ -358,7 +358,7 @@ export default function Home() {
             />
             <div className="border my-5"></div>
             <SectionForm
-              title="Generate an attention-grabbing headline for your blog ⭐️"
+              title="Generate headline ideas ⭐️"
               placeholder="Enter a blog topic..."
               value={idea.headline}
               onSubmit={(e) => generateBlogHeadlines(e)}
