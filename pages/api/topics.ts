@@ -16,7 +16,7 @@ export default async function handler(
 ) {
   const completion = await openai.createCompletion({
     model: "text-davinci-002",
-    prompt: `Generate new blog post topics that will engage readers regarding ${req.body.text}.`,
+    prompt: `Brainstorm new blog post topics about ${req.body.text} that will engage readers and rank well on Google.`,
     temperature: 0.8,
     max_tokens: 250,
     top_p: 1,
