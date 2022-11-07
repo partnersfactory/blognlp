@@ -16,9 +16,9 @@ export default async function handler(
 ) {
   const completion = await openai.createCompletion({
     model: "text-davinci-002",
-    prompt: `Generate the final concluding paragraph for a blog titled ${req.body.text}.`,
+    prompt: `End the blog post about ${req.body.text} with an engaging, strong conclusion.`,
     temperature: 0.8,
-    max_tokens: 350,
+    max_tokens: 500,
     top_p: 1,
     frequency_penalty: 0.8,
     presence_penalty: 0,
