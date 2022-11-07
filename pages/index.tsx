@@ -373,7 +373,7 @@ export default function Home() {
             />
             <div className="border my-5"></div>
             <SectionForm
-              title="Generate a paragraph for a given blog section ✨"
+              title="Generate a blog section paragraph ✨"
               placeholder="Enter a blog section..."
               value={idea.section}
               onSubmit={(e) => generateSectionExpand(e)}
