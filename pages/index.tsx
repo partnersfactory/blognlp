@@ -297,7 +297,7 @@ export default function Home() {
             />
             <div className="border my-5"></div>
             <SectionForm
-              title="Generate an outline to better organize your blog 📝"
+              title="Generate a blog outline 📝"
               placeholder="Enter a blog title or topic..."
               value={idea.outline}
               onSubmit={(e) => generateBlogOutline(e)}
