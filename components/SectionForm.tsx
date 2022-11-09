@@ -26,7 +26,7 @@ export const SectionForm = ({
   blogText?: string[];
 }) => {
   return (
-    <div className="flex flex-col space-y-4">
+    <div className="flex flex-col space-y-2">
       <h2 className="mb-2 text-xl font-semibold">{title}</h2>
       <form className="w-full" onSubmit={onSubmit}>
         <div className="flex space-x-5 items-end">
@@ -34,7 +34,7 @@ export const SectionForm = ({
             <div className="flex flex-col space-y-1">
               <CharacterCounter value={value} maxLength={100} />
               <input
-                className="border outline-none font-light rounded-md p-2 w-[340px] focus:border-blue-400 transition duration-300 ease-in-out"
+                className="border outline-none font-light rounded-md p-2 w-[240px] md:w-[340px] focus:border-blue-400 transition duration-300 ease-in-out"
                 placeholder={placeholder}
                 value={value}
                 onChange={onChange}
@@ -46,7 +46,7 @@ export const SectionForm = ({
             <div className="flex flex-col space-y-1">
               <CharacterCounter value={value} maxLength={800} />
               <textarea
-                className="border outline-none font-light rounded-md p-2 w-[340px] focus:border-blue-400 transition duration-300 ease-in-out"
+                className="border outline-none font-light rounded-md p-2 w-[240px] md:w-[340px] focus:border-blue-400 transition duration-300 ease-in-out"
                 placeholder={placeholder}
                 rows={8}
                 value={value}
