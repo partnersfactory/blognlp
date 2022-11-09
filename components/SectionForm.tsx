@@ -44,14 +44,14 @@ export const SectionForm = ({
           )}
           {type === TextType.TEXTAREA && (
             <div className="flex flex-col space-y-1">
-              <CharacterCounter value={value} maxLength={800} />
+              <CharacterCounter value={value} maxLength={750} />
               <textarea
                 className="border outline-none font-light rounded-md p-2 w-[240px] md:w-[340px] focus:border-blue-400 transition duration-300 ease-in-out"
                 placeholder={placeholder}
                 rows={8}
                 value={value}
                 onChange={onChange}
-                maxLength={800}
+                maxLength={750}
               />
             </div>
           )}
