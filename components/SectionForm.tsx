@@ -26,9 +26,9 @@ export const SectionForm = ({
   blogText?: string[];
 }) => {
   return (
-    <div className="flex flex-col space-y-2">
+    <div className="flex flex-col">
       <h2 className="mb-2 text-xl font-semibold">{title}</h2>
-      <form className="w-full" onSubmit={onSubmit}>
+      <form className="w-full space-y-2" onSubmit={onSubmit}>
         <div className="flex space-x-5 items-end">
           {type === TextType.INPUT && (
             <div className="flex flex-col space-y-1">
@@ -66,7 +66,7 @@ export const SectionForm = ({
           )}
         </div>
       </form>
-      <div className="mt-5">
+      <div className="mt-6">
         {blogText?.map((text) => (
           <p key={text} className="text-sm font-serif font mb-4">
             {text}
