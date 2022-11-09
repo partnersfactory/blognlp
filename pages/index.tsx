@@ -420,8 +420,8 @@ export default function Home() {
             />
             <div className="border my-5"></div>
             <SectionForm
-              title="Generate SEO keywords for your blog 🔑"
-              placeholder="Enter a blog topic..."
+              title="Generate keyword ideas 🔑"
+              placeholder="Enter keyword..."
               value={idea.keywords}
               onSubmit={(e) => generateBlogKeywords(e)}
               onChange={(e) =>
