@@ -18,7 +18,7 @@ export default async function handler(
     model: "text-davinci-002",
     prompt: `Translate this into ${req.body.language}:\n\n${req.body.text}\n\n`,
     temperature: 0.3,
-    max_tokens: 1000,
+    max_tokens: 600,
     top_p: 1,
     frequency_penalty: 0,
     presence_penalty: 0,
