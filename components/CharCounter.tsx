@@ -7,7 +7,7 @@ export type CharacterProps = {
 
 export const CharacterCounter: FC<CharacterProps> = ({ maxLength, value }) => {
   return (
-    <div>
+    <div className="self-end">
       <span
         className={`${
           value.length < maxLength ? "text-gray-400" : "text-red-500"
