@@ -1,4 +1,5 @@
 import React from "react";
+import { CharacterCounter } from "./CharCounter";
 
 export enum TextType {
   INPUT = "input",
@@ -28,29 +29,36 @@ export const SectionForm = ({
     <div className="flex flex-col space-y-4">
       <h2 className="mb-2 text-xl font-semibold">{title}</h2>
       <form className="w-full" onSubmit={onSubmit}>
-        <div className="flex space-x-5 items-center">
+        <div className="flex space-x-5 items-end">
           {type === TextType.INPUT && (
-            <input
-              className="border outline-none font-light rounded-md p-2 w-[340px] focus:border-blue-400 transition duration-300 ease-in-out"
-              placeholder={placeholder}
-              value={value}
-              onChange={onChange}
-            />
+            <div className="flex flex-col space-y-1">
+              <CharacterCounter value={value} maxLength={100} />
+              <input
+                className="border outline-none font-light rounded-md p-2 w-[340px] focus:border-blue-400 transition duration-300 ease-in-out"
+                placeholder={placeholder}
+                value={value}
+                onChange={onChange}
+                maxLength={100}
+              />
+            </div>
           )}
           {type === TextType.TEXTAREA && (
-            <textarea
-              className="border outline-none font-light rounded-md p-2 w-[340px] focus:border-blue-400 transition duration-300 ease-in-out"
-              placeholder={placeholder}
-              rows={8}
-              value={value}
-              onChange={onChange}
-              maxLength={800}
-            />
+            <div className="flex flex-col space-y-1">
+              <CharacterCounter value={value} maxLength={800} />
+              <textarea
+                className="border outline-none font-light rounded-md p-2 w-[340px] focus:border-blue-400 transition duration-300 ease-in-out"
+                placeholder={placeholder}
+                rows={8}
+                value={value}
+                onChange={onChange}
+                maxLength={800}
+              />
+            </div>
           )}
           {isLoading && <Loading />}
           {!isLoading && (
             <button
-              className="bg-gradient-to-r cursor-pointer from-indigo-500 via-purple-500 to-pink-500 text-white p-2 rounded-md w-[10rem] hover:scale-105 transition duration-300 ease-in-out disabled:opacity-25 disabled:scale-95"
+              className="bg-gradient-to-r mb-0.5 cursor-pointer from-indigo-500 via-purple-500 to-pink-500 text-white p-2 rounded-md w-[10rem] hover:scale-105 transition duration-300 ease-in-out disabled:opacity-25 disabled:scale-95"
               disabled={!value}
             >
               Submit
@@ -60,7 +68,7 @@ export const SectionForm = ({
       </form>
       <div className="mt-5">
         {blogText?.map((text) => (
-          <p key={text} className="text-sm font-serif mb-4">
+          <p key={text} className="text-sm font-serif font mb-4">
             {text}
           </p>
         ))}
