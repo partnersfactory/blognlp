@@ -16,9 +16,9 @@ export default async function handler(
 ) {
   const completion = await openai.createCompletion({
     model: "text-davinci-002",
-    prompt: `Extract keywords from this text: ${req.body.text}.`,
+    prompt: `Extract the keywords from this text: ${req.body.text}.`,
     temperature: 0.3,
-    max_tokens: 60,
+    max_tokens: 80,
     top_p: 1.0,
     frequency_penalty: 0.8,
     presence_penalty: 0.0,
