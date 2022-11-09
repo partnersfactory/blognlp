@@ -1,8 +1,9 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { Seo } from "../components/Seo";
 import { CreateCompletionResponseChoicesInner } from "openai";
 import { SectionForm, TextType } from "../components/SectionForm";
 import axios from "axios";
+import { LanguageDropdown } from "../components/LanguageDropdown";
 
 export default function Home() {
   const [idea, setIdea] = useState({
@@ -15,6 +16,7 @@ export default function Home() {
     section: "",
     keywords: "",
     rewrite: "",
+    translate: "",
   });
   const [loading, setLoading] = useState({
     topic: false,
@@ -26,6 +28,7 @@ export default function Home() {
     section: false,
     keywords: false,
     rewrite: false,
+    translate: false,
   });
 
   const [topics, setTopics] = useState<
@@ -55,6 +58,11 @@ export default function Home() {
   const [rewrite, setRewrite] = useState<
     CreateCompletionResponseChoicesInner[] | null
   >(null);
+  const [translate, setTranslate] = useState<
+    CreateCompletionResponseChoicesInner[] | null
+  >(null);
+
+  const [language, setLanguage] = useState<string>("English");
 
   const generateBlogTopics = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -207,6 +215,23 @@ export default function Home() {
     setRewrite(response.data.result.choices);
   };
 
+  const generateTranslate = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading({
+      ...loading,
+      translate: true,
+    });
+    const response = await axios.post("/api/translate", {
+      text: idea.translate,
+      language: language,
+    });
+    setLoading({
+      ...loading,
+      translate: false,
+    });
+    setTranslate(response.data.result.choices);
+  };
+
   const blogTopics: string[] | undefined = useMemo(() => {
     if (!topics) return [];
     return topics[0].text?.split("\n").filter((topic) => topic.length > 0);
@@ -257,6 +282,13 @@ export default function Home() {
       ?.split("\n")
       .filter((sentence) => sentence.length > 0);
   }, [rewrite]);
+
+  const contentTranslate: string[] | undefined = useMemo(() => {
+    if (!translate) return [];
+    return translate[0].text
+      ?.split("\n")
+      .filter((content) => content.length > 0);
+  }, [translate]);
 
   return (
     <div>
@@ -417,6 +449,23 @@ export default function Home() {
               isLoading={loading.rewrite}
               blogText={sentenceRewrite}
             />
+            <div className="border my-5"></div>
+            <SectionForm
+              title="Translate content in any language 🗣"
+              placeholder="Enter content..."
+              type={TextType.TEXTAREA}
+              value={idea.translate}
+              onSubmit={(e) => generateTranslate(e)}
+              onChange={(e) =>
+                setIdea({
+                  ...idea,
+                  translate: e.target.value,
+                })
+              }
+              isLoading={loading.translate}
+              blogText={contentTranslate}
+            />
+            <LanguageDropdown language={language} setLanguage={setLanguage} />
           </main>
         </div>
       </div>

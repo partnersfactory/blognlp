@@ -17,7 +17,7 @@ export default async function handler(
   const completion = await openai.createCompletion({
     model: "text-davinci-002",
     prompt: `Detect the tone of voice based on the provided written content: ${req.body.text}.`,
-    temperature: 0.8,
+    temperature: 0.3,
     max_tokens: 250,
     top_p: 1,
     frequency_penalty: 0.8,

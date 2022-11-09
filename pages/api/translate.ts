@@ -16,14 +16,15 @@ export default async function handler(
 ) {
   const completion = await openai.createCompletion({
     model: "text-davinci-002",
-    prompt: `Rewrite a sentence to adjust tone, be less repetitive while retaining meaning: ${req.body.text}.`,
-    temperature: 0.6,
-    max_tokens: 250,
+    prompt: `Translate this into ${req.body.language}:\n\n${req.body.text}\n\n`,
+    temperature: 0.3,
+    max_tokens: 1000,
     top_p: 1,
-    frequency_penalty: 0.8,
+    frequency_penalty: 0,
     presence_penalty: 0,
     user: "user123456",
   });
+  console.log(req.body.language);
 
   res.status(200).json({ result: completion.data });
 }

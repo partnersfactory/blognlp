@@ -59,7 +59,7 @@ export const SectionForm = ({
       </form>
       <div className="mt-5">
         {blogText?.map((text) => (
-          <p key={text} className="text-sm font-medium mb-4">
+          <p key={text} className="text-sm font-serif mb-4">
             {text}
           </p>
         ))}
