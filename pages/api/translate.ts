@@ -24,7 +24,6 @@ export default async function handler(
     presence_penalty: 0,
     user: "user123456",
   });
-  console.log(req.body.language);
 
   res.status(200).json({ result: completion.data });
 }
