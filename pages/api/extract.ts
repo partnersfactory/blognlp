@@ -16,12 +16,12 @@ export default async function handler(
 ) {
   const completion = await openai.createCompletion({
     model: "text-davinci-002",
-    prompt: `Generate a list of keyword ideas that are SEO, low competition & that will rank well in the top-10 for Google: ${req.body.text}.`,
-    temperature: 0.8,
-    max_tokens: 350,
-    top_p: 1,
+    prompt: `Extract keywords from this text: ${req.body.text}.`,
+    temperature: 0.3,
+    max_tokens: 60,
+    top_p: 1.0,
     frequency_penalty: 0.8,
-    presence_penalty: 0,
+    presence_penalty: 0.0,
     user: "user123456",
   });
 

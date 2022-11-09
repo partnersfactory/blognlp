@@ -44,6 +44,7 @@ export const SectionForm = ({
               rows={8}
               value={value}
               onChange={onChange}
+              maxLength={1000}
             />
           )}
           {isLoading && <Loading />}

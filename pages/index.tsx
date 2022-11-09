@@ -17,6 +17,7 @@ export default function Home() {
     keywords: "",
     rewrite: "",
     translate: "",
+    extract: "",
   });
   const [loading, setLoading] = useState({
     topic: false,
@@ -29,6 +30,7 @@ export default function Home() {
     keywords: false,
     rewrite: false,
     translate: false,
+    extract: false,
   });
 
   const [topics, setTopics] = useState<
@@ -59,6 +61,9 @@ export default function Home() {
     CreateCompletionResponseChoicesInner[] | null
   >(null);
   const [translate, setTranslate] = useState<
+    CreateCompletionResponseChoicesInner[] | null
+  >(null);
+  const [extract, setExtract] = useState<
     CreateCompletionResponseChoicesInner[] | null
   >(null);
 
@@ -181,7 +186,7 @@ export default function Home() {
     setSection(response.data.result.choices);
   };
 
-  const generateBlogKeywords = async (e: React.FormEvent<HTMLFormElement>) => {
+  const generateSEOKeywords = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading({
       ...loading,
@@ -195,6 +200,22 @@ export default function Home() {
       keywords: false,
     });
     setKeywords(response.data.result.choices);
+  };
+
+  const extractKeywords = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading({
+      ...loading,
+      extract: true,
+    });
+    const response = await axios.post("/api/extract", {
+      text: idea.extract,
+    });
+    setLoading({
+      ...loading,
+      extract: false,
+    });
+    setExtract(response.data.result.choices);
   };
 
   const generateSentenceRewrite = async (
@@ -290,6 +311,13 @@ export default function Home() {
       .filter((content) => content.length > 0);
   }, [translate]);
 
+  const contentKeywords: string[] | undefined = useMemo(() => {
+    if (!extract) return [];
+    return extract[0].text
+      ?.split("\n")
+      .filter((keywords) => keywords.length > 0);
+  }, [extract]);
+  console.log(contentKeywords);
   return (
     <div>
       <Seo />
@@ -420,10 +448,10 @@ export default function Home() {
             />
             <div className="border my-5"></div>
             <SectionForm
-              title="Generate keyword ideas 🔑"
+              title="Generate keyword ideas that will rank well 🔑"
               placeholder="Enter keyword..."
               value={idea.keywords}
-              onSubmit={(e) => generateBlogKeywords(e)}
+              onSubmit={(e) => generateSEOKeywords(e)}
               onChange={(e) =>
                 setIdea({
                   ...idea,
@@ -432,6 +460,22 @@ export default function Home() {
               }
               isLoading={loading.keywords}
               blogText={blogKeywords}
+            />
+            <div className="border my-5"></div>
+            <SectionForm
+              title="Extract keywords from block of text 🔎"
+              placeholder="Enter keyword..."
+              type={TextType.TEXTAREA}
+              value={idea.extract}
+              onSubmit={(e) => extractKeywords(e)}
+              onChange={(e) =>
+                setIdea({
+                  ...idea,
+                  extract: e.target.value,
+                })
+              }
+              isLoading={loading.extract}
+              blogText={contentKeywords}
             />
             <div className="border my-5"></div>
             <SectionForm
