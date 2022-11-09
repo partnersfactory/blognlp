@@ -495,7 +495,7 @@ export default function Home() {
             />
             <div className="border my-5"></div>
             <SectionForm
-              title="Translate content in any language 🗣"
+              title="Translate content in multiple languages 🗣"
               placeholder="Enter content..."
               type={TextType.TEXTAREA}
               value={idea.translate}
@@ -514,7 +514,7 @@ export default function Home() {
         </div>
       </div>
 
-      <footer className="flex w-[20rem] mx-auto text-center justify-center space-y-2 flex-col items-center mb-10 text-xs">
+      <footer className="flex w-[20rem] mx-auto text-center justify-center space-y-2 flex-col items-center pb-10 text-xs">
         <span>
           Designed & built by{" "}
           <a
