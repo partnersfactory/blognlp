@@ -317,7 +317,6 @@ export default function Home() {
       ?.split("\n")
       .filter((keywords) => keywords.length > 0);
   }, [extract]);
-  console.log(contentKeywords);
   return (
     <div>
       <Seo />
