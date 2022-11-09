@@ -16,9 +16,9 @@ export default async function handler(
 ) {
   const completion = await openai.createCompletion({
     model: "text-davinci-002",
-    prompt: `Generate SEO keywords for the following blog topic: ${req.body.text}.`,
+    prompt: `Generate a thorough list of SEO keywords for the following blog topic: ${req.body.text}.`,
     temperature: 0.8,
-    max_tokens: 250,
+    max_tokens: 350,
     top_p: 1,
     frequency_penalty: 0.8,
     presence_penalty: 0,
